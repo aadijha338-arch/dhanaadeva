@@ -11,7 +11,7 @@ services:
           name: dhanaadev-db
           property: connectionString
 
-  - type: static
+  - type: web
     name: dhanaadev-frontend
     env: static
     buildCommand: npm install && npm run build
