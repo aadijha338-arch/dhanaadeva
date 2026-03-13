@@ -1,8 +1,12 @@
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+
 from .database import Base, engine, SessionLocal
 from . import models, ai_engine
+
+# Import your auth router (FIX)
+from .auth import router as auth_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -25,6 +29,11 @@ def get_db():
     finally:
         db.close()
 
+
+# -------------------------
+# BUSINESS ENDPOINTS
+# -------------------------
+
 @app.post("/business")
 def create_business(name: str, industry: str, db: Session = Depends(get_db)):
     b = models.Business(name=name, industry=industry)
@@ -32,6 +41,11 @@ def create_business(name: str, industry: str, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(b)
     return b
+
+
+# -------------------------
+# PRODUCT ENDPOINTS
+# -------------------------
 
 @app.post("/product")
 def create_product(
@@ -49,6 +63,11 @@ def create_product(
     db.refresh(p)
     return p
 
+
+# -------------------------
+# SALES ENDPOINTS
+# -------------------------
+
 @app.post("/sale")
 def create_sale(
     product_id: int, date: str, units_sold: int, price: float,
@@ -65,6 +84,11 @@ def create_sale(
     db.commit()
     db.refresh(s)
     return s
+
+
+# -------------------------
+# COUNTRY INDICATOR ENDPOINTS
+# -------------------------
 
 @app.post("/country-indicator")
 def create_country_indicator(
@@ -85,9 +109,15 @@ def create_country_indicator(
     db.refresh(ci)
     return ci
 
+
+# -------------------------
+# AI ENGINE ENDPOINTS
+# -------------------------
+
 @app.post("/ai/generate-recommendations")
 def generate_recs(business_id: int, db: Session = Depends(get_db)):
     return ai_engine.generate_recommendations(db, business_id)
+
 
 @app.get("/recommendations")
 def list_recs(business_id: int, db: Session = Depends(get_db)):
@@ -96,7 +126,10 @@ def list_recs(business_id: int, db: Session = Depends(get_db)):
         .filter(models.Recommendation.business_id == business_id)
         .all()
     )
-    from .auth import router as auth_router
-app.include_router(auth_router)
-from .auth import router as auth_router
+
+
+# -------------------------
+# AUTH ROUTER (FIXED)
+# -------------------------
+
 app.include_router(auth_router)
