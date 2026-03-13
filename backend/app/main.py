@@ -41,7 +41,9 @@ def create_business(name: str, industry: str, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(b)
     return b
-
+@app.get("/businesses")
+def list_businesses(db: Session = Depends(get_db)):
+    return db.query(models.Business).all()
 
 # -------------------------
 # PRODUCT ENDPOINTS
