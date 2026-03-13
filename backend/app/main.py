@@ -135,3 +135,6 @@ def list_recs(business_id: int, db: Session = Depends(get_db)):
 # -------------------------
 
 app.include_router(auth_router)
+from .database import Base, engine
+Base.metadata.drop_all(bind=engine)
+Base.metadata.create_all(bind=engine)
