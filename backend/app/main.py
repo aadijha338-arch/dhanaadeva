@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from .database import Base, engine, SessionLocal
-from . import models
+from . import models, ai_engine
 
 # Import your auth router (FIX)
 from .auth import router as auth_router
