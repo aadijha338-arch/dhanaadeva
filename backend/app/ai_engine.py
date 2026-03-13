@@ -1,4 +1,5 @@
-from sqlalchemy.orm import Session
+
+ from sqlalchemy.orm import Session
 from . import models
 
 def generate_recommendations(db: Session, business_id: int):
