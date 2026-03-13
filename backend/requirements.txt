@@ -11,3 +11,5 @@ scikit-learn
 joblib
 matplotlib
 seaborn
+python-jose
+passlib[bcrypt]
