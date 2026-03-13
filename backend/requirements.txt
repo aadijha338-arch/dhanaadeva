@@ -5,11 +5,5 @@ psycopg2-binary
 python-dotenv
 pydantic
 requests
-pandas
-numpy
-scikit-learn
-joblib
-matplotlib
-seaborn
 python-jose
 passlib[bcrypt]
