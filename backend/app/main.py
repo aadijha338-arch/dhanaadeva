@@ -96,3 +96,7 @@ def list_recs(business_id: int, db: Session = Depends(get_db)):
         .filter(models.Recommendation.business_id == business_id)
         .all()
     )
+    from .auth import router as auth_router
+app.include_router(auth_router)
+from .auth import router as auth_router
+app.include_router(auth_router)

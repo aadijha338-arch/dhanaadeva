@@ -8,6 +8,16 @@ class Business(Base):
     name = Column(String, index=True)
     industry = Column(String, index=True)
     products = relationship("Product", back_populates="business")
+    from sqlalchemy import Column, Integer, String, DateTime
+from datetime import datetime
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True, nullable=False)
+    password_hash = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
 class Product(Base):
     __tablename__ = "products"
@@ -46,3 +56,13 @@ class Recommendation(Base):
     expected_profit_change = Column(Float)
     risk_level = Column(String)
     status = Column(String, default="new")
+    from sqlalchemy import Column, Integer, String, DateTime
+from datetime import datetime
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True, nullable=False)
+    password_hash = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
